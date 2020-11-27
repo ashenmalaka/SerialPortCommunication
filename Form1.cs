@@ -73,7 +73,13 @@ namespace SerialPortCommunication
             if (serialPort1.IsOpen)
             {
                 _dataOut = tBoxDataOut.Text;
-                serialPort1.Write(_dataOut);
+
+                //Converting Data to Hex format
+                var toHexBytes = Encoding.Default.GetBytes(_dataOut);
+                var hexString = BitConverter.ToString(toHexBytes);
+                hexString = hexString.Replace("-", "");
+
+                serialPort1.Write(hexString);
             }
         }
 
