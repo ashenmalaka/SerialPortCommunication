@@ -34,6 +34,11 @@ namespace SerialPortCommunication
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
+            Timer timer = new Timer
+            {
+                Interval = 5000
+            };
+
             try
             {
                 serialPort1.PortName = cBoxComPort.Text;
@@ -45,6 +50,9 @@ namespace SerialPortCommunication
                 serialPort1.Open();
                 progressBar1.Value = 100;
                 lblStatusCom.Text = @"ON";
+
+                timer.Enabled = true;
+                timer.Tick += new System.EventHandler(ShowData);
             }
             catch (Exception err)
             {
