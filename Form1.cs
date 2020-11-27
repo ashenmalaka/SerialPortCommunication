@@ -13,8 +13,8 @@ namespace SerialPortCommunication
 {
     public partial class Form1 : Form
     {
-        string dataOut;
-        string dataIn;
+        private string _dataOut;
+        private string _dataIn;
 
         public Form1()
         {
@@ -48,7 +48,7 @@ namespace SerialPortCommunication
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.Message, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 lblStatusCom.Text = @"OFF";
             }
             
@@ -64,7 +64,7 @@ namespace SerialPortCommunication
             }
             else
             {
-                MessageBox.Show("Serial Port is not opened", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Serial Port is not opened", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -72,8 +72,8 @@ namespace SerialPortCommunication
         {
             if (serialPort1.IsOpen)
             {
-                dataOut = tBoxDataOut.Text;
-                serialPort1.Write(dataOut);
+                _dataOut = tBoxDataOut.Text;
+                serialPort1.Write(_dataOut);
             }
         }
 
@@ -104,13 +104,13 @@ namespace SerialPortCommunication
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            dataIn = serialPort1.ReadExisting();
+            _dataIn = serialPort1.ReadExisting();
             this.Invoke(new EventHandler(ShowData));
         }
 
         private void ShowData(object sender, EventArgs e)
         {
-            tBoxDataIN.Text += dataIn;
+            tBoxDataIN.Text += _dataIn;
             //tBoxDataIN.Text = dataIn;
 
             var dataInLength = tBoxDataIN.TextLength;
